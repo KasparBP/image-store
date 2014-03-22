@@ -1,5 +1,5 @@
 {
-    "name": "bach-pedersen/riak-image-store",
+    "name": "bach-pedersen/imagestore",
     "description": "",
     "authors": [
         {
@@ -18,7 +18,7 @@
             "src/migrations"
         ],
         "psr-0": {
-            "BachPedersen\\RiakImageStore\\": "src/"
+            "BachPedersen\\ImageStore\\": "src/"
         }
     },
     "minimum-stability": "stable"

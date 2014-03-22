@@ -1,5 +1,5 @@
 #Work in progress...
 #View and store images in Riak
-The plan is this provider should be able to resize images and store them in Riak, and display them as well.
-Make sure images are not too big since riak does not handle large objects well.
+Not really sure where this is going and how good an idea it really is, only time will tell ...  
+Anyways the plan is this provider should be able to resize images and store them in Riak, and display them as well.  
 
