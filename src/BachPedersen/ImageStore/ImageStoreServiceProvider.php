@@ -23,40 +23,41 @@ use Riak\Connection;
 
 class ImageStoreServiceProvider extends ServiceProvider {
 
-	/**
-	 * Indicates if loading of the provider is deferred.
-	 *
-	 * @var bool
-	 */
-	protected $defer = false;
+    /**
+     * Indicates if loading of the provider is deferred.
+     *
+     * @var bool
+     */
+    protected $defer = false;
 
-	/**
-	 * Bootstrap the application events.
-	 *
-	 * @return void
-	 */
-	public function boot()
-	{
-		$this->package('bach-pedersen/riak-image-store');
-	}
+    /**
+     * Bootstrap the application events.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        $this->package('bach-pedersen/riak-image-store');
+    }
 
-	/**
-	 * Register the service provider.
-	 *
-	 * @return void
-	 */
-	public function register()
-	{
+    /**
+     * Register the service provider.
+     *
+     * @return void
+     */
+    public function register()
+    {
         $this->app->bindShared('imagestore', function($app)
         {
             /** @var $connection Connection */
             $connection = $app['riak'];
             $imageBucket = $app['config']['imagestore.bucket'];
             $imageResizedBucket = $app['config']['imagestore.bucket_resize'];
-            //
+            return new RiakImageStoreRepository($connection->getBucket($imageBucket),
+                $connection->getBucket($imageResizedBucket));
         });
         $this->registerCommands();
-	}
+    }
 
     /**
      * Register the cache related console commands.
@@ -75,14 +76,14 @@ class ImageStoreServiceProvider extends ServiceProvider {
         $this->commands('command.imagestore.bucket');
     }
 
-	/**
-	 * Get the services provided by the provider.
-	 *
-	 * @return array
-	 */
-	public function provides()
-	{
-		return array('imagestore');
-	}
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return array('imagestore');
+    }
 
 }

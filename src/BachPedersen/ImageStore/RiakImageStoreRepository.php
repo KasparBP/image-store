@@ -18,9 +18,13 @@
 namespace BachPedersen\RiakImageStore;
 
 
+use BachPedersen\RiakImageStore\Model\ImageRaw;
 use BachPedersen\RiakImageStore\Model\ImageSize;
 use Intervention\Image\Image;
 use Riak\Bucket;
+use Riak\Input\GetInput;
+use Riak\Input\PutInput;
+use Riak\Object;
 
 class RiakImageStoreRepository implements ImageStoreRepository
 {
@@ -47,16 +51,72 @@ class RiakImageStoreRepository implements ImageStoreRepository
      */
     public function storeImageInRiak(Image $image, $name, $sizes = array())
     {
-        // TODO: Implement storeImageInRiak() method.
+        // first store the original image
+        $this->storeImage($image, $this->imageBucket, $name);
+
+        foreach ($sizes as $size) {
+            $image->backup();
+            $image->resize($size->width, $size->height);
+            $this->storeImage($image, $this->imageResizedBucket, $size->toString().$name);
+            $image->reset();
+        }
     }
 
     /** Get an image with specified size
      * @param string $name
      * @param ImageSize $withSize
-     * @return string|null raw data string or null
+     * @return ImageRaw|null raw image or null
      */
     public function getImage($name, ImageSize $withSize = null)
     {
-        // TODO: Implement getImage() method.
+        if (isset($withSize)) {
+            $key = $withSize->toString().$name;
+            return $this->getImageWithKey($this->imageResizedBucket, $key);
+        } else {
+            return $this->getImageWithKey($this->imageBucket, $name);
+        }
+    }
+
+    /**
+     * @param Bucket $bucket
+     * @param string $key
+     * @return ImageRaw|null
+     */
+    private function getImageWithKey(Bucket $bucket, $key)
+    {
+        $getOutput = $bucket->get($key);
+        if ($getOutput->hasObject()) {
+            $object = $getOutput->getObject();
+            if (!$object->isDeleted()) {
+                $content = $object->getContent();
+                $contentType = $object->getContentType();
+                return new ImageRaw($content, $contentType);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @param Image $image
+     * @param Bucket $bucket
+     * @param string $key
+     */
+    private function storeImage(Image $image, Bucket $bucket, $key)
+    {
+        $data = $image->encode();
+        if (isset($data)) {
+            $options = new GetInput();
+            $options->setNotFoundOk(true);
+            $options->setReturnHead(true);
+            $getOutput = $bucket->get($key, $options);
+            if ($getOutput->hasObject()) {
+                $imageObj = $getOutput->getFirstObject();
+            } else {
+                $imageObj = new Object($key);
+            }
+            $imageObj->setContentType($image->mime);
+            $imageObj->setContent($data);
+            $bucket->put($imageObj);
+        }
     }
 }

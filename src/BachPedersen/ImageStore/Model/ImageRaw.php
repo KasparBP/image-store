@@ -18,18 +18,30 @@
 namespace BachPedersen\RiakImageStore\Model;
 
 /**
- * Class ImageSize
+ * Class ImageRaw
  * @package BachPedersen\RiakImageStore\Model
  */
-class ImageSize
+class ImageRaw
 {
-    public $width = 0;
 
-    public $height = 0;
+    /**
+     * @var string
+     */
+    public $data;
 
-    public function toString()
+    /**
+     * @var string
+     */
+    public $mimeType;
+
+    /**
+     * @param $data
+     * @param string $mimeType
+     */
+    public function __construct($data, $mimeType)
     {
-        return str_pad($this->width, 4, '0', STR_PAD_LEFT).
-                    str_pad($this->height, 4, '0', STR_PAD_LEFT);
+        $this->data = $data;
+        $this->mimeType = $mimeType;
     }
+
 } 

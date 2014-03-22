@@ -16,6 +16,7 @@
 */
 
 namespace BachPedersen\RiakImageStore;
+use BachPedersen\RiakImageStore\Model\ImageRaw;
 use BachPedersen\RiakImageStore\Model\ImageSize;
 use Intervention\Image\Image;
 
@@ -36,7 +37,7 @@ interface ImageStoreRepository
     /** Get an image with specified size
      * @param string $name
      * @param ImageSize $withSize
-     * @return string|null raw data string or null
+     * @return ImageRaw|null raw image or null
      */
     public function getImage($name, ImageSize $withSize = null);
 
