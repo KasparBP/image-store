@@ -10,5 +10,6 @@ services:
 before_script:
   - composer self-update
   - composer install --prefer-source --no-interaction --dev
+  - pecl install riak
 
 script: phpunit
