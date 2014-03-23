@@ -15,11 +15,11 @@
    limitations under the License.
 */
 
-namespace BachPedersen\RiakImageStore;
+namespace BachPedersen\ImageStore;
 
 
-use BachPedersen\RiakImageStore\Model\ImageRaw;
-use BachPedersen\RiakImageStore\Model\ImageSize;
+use BachPedersen\ImageStore\Model\ImageRaw;
+use BachPedersen\ImageStore\Model\ImageSize;
 use Intervention\Image\Image;
 use Riak\Bucket;
 use Riak\Input\GetInput;

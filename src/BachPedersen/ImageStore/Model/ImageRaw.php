@@ -15,7 +15,7 @@
    limitations under the License.
 */
 
-namespace BachPedersen\RiakImageStore\Model;
+namespace BachPedersen\ImageStore\Model;
 
 /**
  * Class ImageRaw

@@ -1,4 +1,4 @@
-<?php namespace BachPedersen\RiakImageStore;
+<?php namespace BachPedersen\ImageStore;
 /*
    Copyright 2014: Kaspar Bach Pedersen
 
@@ -16,7 +16,7 @@
 */
 
 use BachPedersen\LaravelRiak\Console\BucketInitCommand;
-use BachPedersen\RiakImageStore\Console\SetBucketPropertiesCommand;
+use BachPedersen\ImageStore\Console\SetBucketPropertiesCommand;
 use Illuminate\Support\ServiceProvider;
 use Riak\BucketPropertyList;
 use Riak\Connection;

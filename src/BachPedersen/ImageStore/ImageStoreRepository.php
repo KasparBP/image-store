@@ -15,9 +15,9 @@
    limitations under the License.
 */
 
-namespace BachPedersen\RiakImageStore;
-use BachPedersen\RiakImageStore\Model\ImageRaw;
-use BachPedersen\RiakImageStore\Model\ImageSize;
+namespace BachPedersen\ImageStore;
+use BachPedersen\ImageStore\Model\ImageRaw;
+use BachPedersen\ImageStore\Model\ImageSize;
 use Intervention\Image\Image;
 
 /**

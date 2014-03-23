@@ -15,7 +15,7 @@
    limitations under the License.
 */
 
-namespace BachPedersen\RiakImageStore\Console;
+namespace BachPedersen\ImageStore\Console;
 
 use Illuminate\Console\Command;
 use Riak\BucketPropertyList;
