@@ -31,16 +31,6 @@ class ImageStoreServiceProvider extends ServiceProvider {
     protected $defer = false;
 
     /**
-     * Bootstrap the application events.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        $this->package('bach-pedersen/riak-image-store');
-    }
-
-    /**
      * Register the service provider.
      *
      * @return void

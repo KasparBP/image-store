@@ -23,9 +23,25 @@ namespace BachPedersen\ImageStore\Model;
  */
 class ImageSize
 {
+    /**
+     * @var int
+     */
     public $width = 0;
 
+    /**
+     * @var int
+     */
     public $height = 0;
+
+    /**
+     * @param int $width
+     * @param int $height
+     */
+    public function __construct($width, $height)
+    {
+        $this->width = $width;
+        $this->height = $height;
+    }
 
     public function toString()
     {

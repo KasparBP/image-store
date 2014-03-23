@@ -72,13 +72,8 @@ class RiakImageStoreRepositoryTest extends \PHPUnit_Framework_TestCase
         $image->mime = 'image/png';
         $name = 'icicles';
 
-        $size1 = new ImageSize();
-        $size1->height = 100;
-        $size1->width = 100;
-
-        $size2 = new ImageSize();
-        $size2->height = 500;
-        $size2->width = 500;
+        $size1 = new ImageSize(100,100);
+        $size2 = new ImageSize(500,500);
 
         $this->imageStore->storeImageInRiak($image, $name, [$size1, $size2]);
 

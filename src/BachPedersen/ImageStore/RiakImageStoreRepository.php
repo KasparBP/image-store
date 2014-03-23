@@ -109,7 +109,7 @@ class RiakImageStoreRepository implements ImageStoreRepository
             $options->setNotFoundOk(true);
             $options->setReturnHead(true);
             $getOutput = $bucket->get($key, $options);
-            if ($getOutput->hasObject()) {
+            if ($getOutput !== null && $getOutput->hasObject()) {
                 $imageObj = $getOutput->getFirstObject();
             } else {
                 $imageObj = new Object($key);
