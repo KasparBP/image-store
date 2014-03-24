@@ -21,6 +21,7 @@ namespace BachPedersen\ImageStore;
 use BachPedersen\ImageStore\Model\ImageRaw;
 use BachPedersen\ImageStore\Model\ImageSize;
 use Intervention\Image\Image;
+use Log;
 use Riak\Bucket;
 use Riak\Input\GetInput;
 use Riak\Input\PutInput;
@@ -109,7 +110,7 @@ class RiakImageStoreRepository implements ImageStoreRepository
             $options->setNotFoundOk(true);
             $options->setReturnHead(true);
             $getOutput = $bucket->get($key, $options);
-            if ($getOutput !== null && $getOutput->hasObject()) {
+            if ($getOutput->hasObject()) {
                 $imageObj = $getOutput->getFirstObject();
             } else {
                 $imageObj = new Object($key);
