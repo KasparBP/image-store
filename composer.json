@@ -17,9 +17,6 @@
         "phpunit/phpunit": "3.7.x"
     },
     "autoload": {
-        "classmap": [
-            "src/migrations"
-        ],
         "psr-0": {
             "BachPedersen\\ImageStore\\": "src/"
         }

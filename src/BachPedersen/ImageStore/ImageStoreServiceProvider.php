@@ -21,7 +21,11 @@ use Illuminate\Support\ServiceProvider;
 use Riak\BucketPropertyList;
 use Riak\Connection;
 
-class ImageStoreServiceProvider extends ServiceProvider {
+class ImageStoreServiceProvider extends ServiceProvider
+{
+
+    public static $CONFIG_NAME_IMAGESTORE_BUCKET = 'imagestore.bucket';
+    public static $CONFIG_NAME_IMAGESTORE_RESIZEBUCKET = 'imagestore.bucket_resize';
 
     /**
      * Indicates if loading of the provider is deferred.
@@ -41,8 +45,8 @@ class ImageStoreServiceProvider extends ServiceProvider {
         {
             /** @var $connection Connection */
             $connection = $app['riak'];
-            $imageBucket = $app['config']['imagestore.bucket'];
-            $imageResizedBucket = $app['config']['imagestore.bucket_resize'];
+            $imageBucket = $app['config'][static::$CONFIG_NAME_IMAGESTORE_BUCKET];
+            $imageResizedBucket = $app['config'][static::$CONFIG_NAME_IMAGESTORE_RESIZEBUCKET];
             return new RiakImageStoreRepository($connection->getBucket($imageBucket),
                 $connection->getBucket($imageResizedBucket));
         });
@@ -58,8 +62,8 @@ class ImageStoreServiceProvider extends ServiceProvider {
     {
         $this->app['command.imagestore.bucket'] = $this->app->share(function($app)
         {
-            $imageBucket = $app['config']['imagestore.bucket'];
-            $imageResizedBucket = $app['config']['imagestore.bucket_resize'];
+            $imageBucket = $app['config'][static::$CONFIG_NAME_IMAGESTORE_BUCKET];
+            $imageResizedBucket = $app['config'][static::$CONFIG_NAME_IMAGESTORE_RESIZEBUCKET];
             return new SetBucketPropertiesCommand($app['riak'], [$imageBucket, $imageResizedBucket]);
         });
 

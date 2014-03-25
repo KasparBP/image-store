@@ -1,4 +1,4 @@
-<?php
+<?php namespace BachPedersen\ImageStore\Controllers;
 /*
    Copyright 2014: Kaspar Bach Pedersen
 
@@ -15,10 +15,9 @@
    limitations under the License.
 */
 
-namespace controllers;
-
 use App;
 use BachPedersen\ImageStore\ImageStoreRepository;
+use BachPedersen\ImageStore\Model\ImageSize;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Response;
 
@@ -34,10 +33,25 @@ class ImageStoreController extends Controller
         $this->imageStore = $imageStore;
     }
 
-    public function showImage($imageName) {
+    public function showImage($imageName)
+    {
         $rawImage = $this->imageStore->getImage($imageName);
+        $this->respondWithImage($rawImage);
+    }
+
+    public function showImageInSize($imageName, $width, $height)
+    {
+        $rawImage = $this->imageStore->getImage($imageName, new ImageSize($width, $height));
+        $this->respondWithImage($rawImage);
+    }
+
+    /**
+     * @param $rawImage
+     */
+    public function respondWithImage($rawImage)
+    {
         if (isset($rawImage) && isset($rawImage->data)) {
-            Response::stream(function() use($rawImage) {
+            Response::stream(function () use ($rawImage) {
                 echo $rawImage->data;
             }, 200, $rawImage->mimeType);
         } else {
