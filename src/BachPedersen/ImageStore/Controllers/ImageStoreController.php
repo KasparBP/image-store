@@ -28,32 +28,33 @@ class ImageStoreController extends Controller
      */
     private $imageStore;
 
-    public function __construct(ImageStoreRepository $imageStore)
+    public function __construct()
     {
-        $this->imageStore = $imageStore;
+        $this->imageStore = App::make('imagestore');
     }
 
     public function showImage($imageName)
     {
         $rawImage = $this->imageStore->getImage($imageName);
-        $this->respondWithImage($rawImage);
+        return $this->respondWithImage($rawImage);
     }
 
     public function showImageInSize($imageName, $width, $height)
     {
         $rawImage = $this->imageStore->getImage($imageName, new ImageSize($width, $height));
-        $this->respondWithImage($rawImage);
+        return $this->respondWithImage($rawImage);
     }
 
     /**
      * @param $rawImage
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
     public function respondWithImage($rawImage)
     {
         if (isset($rawImage) && isset($rawImage->data)) {
-            Response::stream(function () use ($rawImage) {
+            return Response::stream(function () use ($rawImage) {
                 echo $rawImage->data;
-            }, 200, $rawImage->mimeType);
+            }, 200, ['content-type' => $rawImage->mimeType, 'content-transfer-encoding' => 'binary']);
         } else {
             App::abort(404);
         }
