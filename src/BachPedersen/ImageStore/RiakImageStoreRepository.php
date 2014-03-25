@@ -45,16 +45,15 @@ class RiakImageStoreRepository implements ImageStoreRepository
         $this->imageResizedBucket = $imageResizedBucket;
     }
 
-    /** Save image, and save resized images as well if sizes are provided.
-     * @param Image $image
-     * @param string $name
-     * @param ImageSize[] $sizes
+    /**
+     * @inheritdoc
      */
-    public function storeImageInRiak(Image $image, $name, $sizes = array())
+    public function storeImageInRiak(Image $image, $name, $sizes = [], $saveOriginal = true)
     {
-        // first store the original image
-        $this->storeImage($image, $this->imageBucket, $name);
-
+        if ($saveOriginal) {
+            $this->storeImage($image, $this->imageBucket, $name);
+        }
+        /** @var $sizes ImageSize[] */
         foreach ($sizes as $size) {
             $image->backup();
             $image->resize($size->width, $size->height);
@@ -63,10 +62,8 @@ class RiakImageStoreRepository implements ImageStoreRepository
         }
     }
 
-    /** Get an image with specified size
-     * @param string $name
-     * @param ImageSize $withSize
-     * @return ImageRaw|null raw image or null
+    /**
+     * @inheritdoc
      */
     public function getImage($name, ImageSize $withSize = null)
     {

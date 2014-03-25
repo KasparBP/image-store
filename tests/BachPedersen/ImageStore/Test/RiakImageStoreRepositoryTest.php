@@ -58,7 +58,7 @@ class RiakImageStoreRepositoryTest extends \PHPUnit_Framework_TestCase
         $image = new Image($imagePath);
         $image->mime = 'image/png';
         $name = 'countryside';
-        $this->imageStore->storeImageInRiak($image, $name);
+        $this->imageStore->storeImageInRiak($image, $name, [], true);
 
         $imageRaw = $this->imageStore->getImage($name);
         $this->assertNotNull($imageRaw);
@@ -75,7 +75,7 @@ class RiakImageStoreRepositoryTest extends \PHPUnit_Framework_TestCase
         $size1 = new ImageSize(100,100);
         $size2 = new ImageSize(500,500);
 
-        $this->imageStore->storeImageInRiak($image, $name, [$size1, $size2]);
+        $this->imageStore->storeImageInRiak($image, $name, [$size1, $size2], false);
 
         $imageRaw = $this->imageStore->getImage($name, $size1);
         $this->assertNotNull($imageRaw);

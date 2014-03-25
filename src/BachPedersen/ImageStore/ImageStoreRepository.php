@@ -31,12 +31,14 @@ interface ImageStoreRepository
      * @param Image $image
      * @param string $name
      * @param ImageSize[] $sizes
+     * @param bool $saveOriginal
+     * @return
      */
-    public function storeImageInRiak(Image $image, $name, $sizes = array());
+    public function storeImageInRiak(Image $image, $name, $sizes = [], $saveOriginal = true);
 
     /** Get an image with specified size
      * @param string $name
-     * @param ImageSize $withSize
+     * @param ImageSize $withSize if null is supplied the original image is returned
      * @return ImageRaw|null raw image or null
      */
     public function getImage($name, ImageSize $withSize = null);
