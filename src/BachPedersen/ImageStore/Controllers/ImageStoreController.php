@@ -16,7 +16,6 @@
 */
 
 use App;
-use BachPedersen\ImageStore\ImageStoreRepository;
 use BachPedersen\ImageStore\Model\ImageSize;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Response;
