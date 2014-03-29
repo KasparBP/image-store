@@ -29,10 +29,10 @@ interface ImageStoreRepository
 
     /** Save image, and save resized images as well if sizes are provided.
      * @param Image $image
-     * @param string $name
+     * @param string|null $name imagename or null to autogenerate a name
      * @param ImageSize[] $sizes
      * @param bool $saveOriginal
-     * @return
+     * @return string image name
      */
     public function storeImageInRiak(Image $image, $name, $sizes = [], $saveOriginal = true);
 
