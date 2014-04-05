@@ -56,7 +56,7 @@ class RiakImageStoreRepository implements ImageStoreRepository
         /** @var $sizes ImageSize[] */
         foreach ($sizes as $size) {
             $image->backup();
-            $image->resize($size->width, $size->height);
+            $image->resize($size->width, $size->height, true);
             $this->storeImage($image, $this->imageResizedBucket, $size->toString().$name);
             $image->reset();
         }
