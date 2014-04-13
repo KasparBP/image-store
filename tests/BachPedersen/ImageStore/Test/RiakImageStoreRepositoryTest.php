@@ -81,13 +81,13 @@ class RiakImageStoreRepositoryTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($imageRaw);
         $decoded1 = $this->imageFromRaw($imageRaw);
         $this->assertEquals(100, $decoded1->height);
-        $this->assertEquals(100, $decoded1->width);
+        $this->assertEquals(66, $decoded1->width);
 
         $imageRaw = $this->imageStore->getImage($name, $size2);
         $this->assertNotNull($imageRaw);
         $decoded2 = $this->imageFromRaw($imageRaw);
         $this->assertEquals(500, $decoded2->height);
-        $this->assertEquals(500, $decoded2->width);
+        $this->assertEquals(331, $decoded2->width);
     }
 
     private function imageFromRaw(ImageRaw $raw) {
